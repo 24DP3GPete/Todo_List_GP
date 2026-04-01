@@ -1,22 +1,32 @@
 import os
+import csv
 
-DEFAULT_JOB_FILE = "job.txt"
-
-
-def _normalize_path(job_file):
-    return job_file if job_file is not None else DEFAULT_JOB_FILE
+DEFAULT_TASK_FILE = "task.csv"
 
 
-def load_jobs(job_file=None):
-    path = _normalize_path(job_file)
+def _normalize_path(task_file):
+    return task_file if task_file is not None else DEFAULT_TASK_FILE
+
+
+def load_tasks(task_file=None):
+    path = _normalize_path(task_file)
     if not os.path.exists(path):
         return []
-    with open(path, "r", encoding="utf-8") as f:
-        return [line.rstrip("\n") for line in f if line.strip()]
+    with open(path, "r", encoding="utf-8", newline='') as f:
+        reader = csv.DictReader(f)
+        return list(reader)
 
 
-def save_jobs(jobs, job_file=None):
-    path = _normalize_path(job_file)
-    with open(path, "w", encoding="utf-8") as f:
-        for item in jobs:
-            f.write(item + "\n")
+def save_tasks(tasks, task_file=None):
+    path = _normalize_path(task_file)
+    if not tasks:
+        # If no tasks, just create empty file or remove?
+        with open(path, "w", encoding="utf-8", newline='') as f:
+            pass
+        return
+    fieldnames = ['numurs', 'nosaukums', 'description', 'priority', 'status']
+    with open(path, "w", encoding="utf-8", newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for task in tasks:
+            writer.writerow(task)

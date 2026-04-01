@@ -1,82 +1,132 @@
-from todo_io import load_jobs, save_jobs
+from todo_io import load_tasks, save_tasks
 
 
-def show_jobs(job):
-    if not job:
+def show_tasks(task):
+    if not task:
         print("Vēl nav darbu. Pievienojiet vienu!")
         return
 
-    print("\nJūsu darbu saraksts:")
-    for i, item in enumerate(job, start=1):
-        print(f"{i}. {item}")
+    print("\nUzdevumu saraksts:")
+    for i, item in enumerate(task, start=1):
+        print(f"{i}. {item['nosaukums']}")
     print()
 
 
-def add_job(job, job_file=None):
-    item = input("Ievadiet jaunu darbu: ").strip()
-    if not item:
-        print("Tukšs darbs nav pievienots.")
-        return job
+def view_details(task):
+    if not task:
+        print("Nav uzdevumu.")
+        return
 
-    job.append(item)
-    save_jobs(job, job_file=job_file or None)
-    print("Pievienots:", item)
-    return job
+    show_tasks(task)
+    val = input("Ievadiet numuru, lai skatītu detaļas (vai Enter, lai atceltu): ").strip()
+    if not val:
+        print("Atcelts.")
+        return
+
+    if not val.isdigit():
+        print("Lūdzu ievadiet derīgu numuru.")
+        return
+
+    idx = int(val) - 1
+    if idx < 0 or idx >= len(task):
+        print("Indekss ārpus diapazona.")
+        return
+
+    item = task[idx]
+    print("\nDetaļas:")
+    print(f"Numurs: {item['numurs']}")
+    print(f"Nosaukums: {item['nosaukums']}")
+    print(f"Apraksts: {item['description']}")
+    print(f"Prioritāte: {item['priority']}")
+    print(f"Statuss: {item['status']}")
+    print()
 
 
-def remove_job(job, job_file=None):
-    if not job:
+def add_task(task, task_file=None):
+    nosaukums = input("Ievadiet nosaukumu: ").strip()
+    if not nosaukums:
+        print("Tukšs nosaukums nav pievienots.")
+        return task
+
+    description = input("Ievadiet aprakstu: ").strip()
+    priority = input("Ievadiet prioritāti (zems/vidējs/augsts): ").strip()
+    status = input("Ievadiet statusu (gaida/darbojas/pabeigts): ").strip()
+
+    new_task = {
+        'numurs': len(task) + 1,
+        'nosaukums': nosaukums,
+        'description': description,
+        'priority': priority,
+        'status': status
+    }
+
+    task.append(new_task)
+    save_tasks(task, task_file=task_file or None)
+    print("Pievienots:", nosaukums)
+    return task
+
+
+def remove_task(task, task_file=None):
+    if not task:
         print("Nav ko noņemt.")
-        return job
+        return task
 
-    show_jobs(job)
+    show_tasks(task)
     val = input("Ievadiet numuru, lai noņemtu (vai nospiediet Enter, lai atceltu): ").strip()
     if not val:
         print("Atcelts.")
-        return job
+        return task
 
     if not val.isdigit():
         print("Lūdzu ievadiet derīgu numuru.")
-        return job
+        return task
 
     idx = int(val) - 1
-    if idx < 0 or idx >= len(job):
+    if idx < 0 or idx >= len(task):
         print("Indekss ārpus diapazona.")
-        return job
+        return task
 
-    removed = job.pop(idx)
-    save_jobs(job, job_file=job_file or None)
-    print("Noņemts:", removed)
-    return job
+    removed = task.pop(idx)
+    save_tasks(task, task_file=task_file or None)
+    print("Noņemts:", f"{removed['numurs']} - {removed['nosaukums']}")
+    return task
 
 
-def edit_job(job, job_file=None):
-    if not job:
+def edit_task(task, task_file=None):
+    if not task:
         print("Nav ko rediģēt.")
-        return job
+        return task
 
-    show_jobs(job)
+    show_tasks(task)
     val = input("Ievadiet numuru, lai rediģētu (vai nospiediet Enter, lai atceltu): ").strip()
     if not val:
         print("Atcelts.")
-        return job
+        return task
 
     if not val.isdigit():
         print("Lūdzu ievadiet derīgu numuru.")
-        return job
+        return task
 
     idx = int(val) - 1
-    if idx < 0 or idx >= len(job):
+    if idx < 0 or idx >= len(task):
         print("Indekss ārpus diapazona.")
-        return job
+        return task
 
-    old_item = job[idx]
-    new_item = input(f"Rediģējiet '{old_item}' uz: ").strip()
-    if not new_item:
-        print("Tukšs rediģējums nav saglabāts.")
-        return job
+    current = task[idx]
+    print(f"Rediģējat: {current['nosaukums']}")
 
-    job[idx] = new_item
-    save_jobs(job, job_file=job_file or None)
-    print("Rediģēts:", old_item, "->", new_item)
-    return job
+    new_nosaukums = input(f"Nosaukums ({current['nosaukums']}): ").strip() or current['nosaukums']
+    new_description = input(f"Apraksts ({current['description']}): ").strip() or current['description']
+    new_priority = input(f"Prioritāte ({current['priority']}): ").strip() or current['priority']
+    new_status = input(f"Statuss ({current['status']}): ").strip() or current['status']
+
+    task[idx] = {
+        'nosaukums': new_nosaukums,
+        'description': new_description,
+        'priority': new_priority,
+        'status': new_status
+    }
+
+    save_tasks(task, task_file=task_file or None)
+    print("Rediģēts.")
+    return task
