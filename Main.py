@@ -1,4 +1,4 @@
-from todo_app import load_jobs, show_jobs, add_job, remove_job
+from todo_app import load_jobs, show_jobs, add_job, remove_job, edit_job
 
 
 if __name__ == "__main__":
@@ -7,8 +7,8 @@ if __name__ == "__main__":
         jobs = load_jobs(job_file=file_path)
 
         while True:
-            print("\njob Menu:\n1) List jobs\n2) Add job\n3) Remove job\n4) Quit")
-            choice = input("Choose an option: ").strip()
+            print("\nMenu:\n1) Uzdevumu saraksts\n2) Pievienot uzdevumu\n3) Noņemt uzdevumu\n4) Rediģēt uzdevumu\n5) Iziet")
+            choice = input("Izvēlēties opciju: ").strip()
 
             if choice == "1":
                 show_jobs(jobs)
@@ -17,8 +17,10 @@ if __name__ == "__main__":
             elif choice == "3":
                 jobs = remove_job(jobs, job_file=file_path)
             elif choice == "4":
-                print("Goodbye!")
+                jobs = edit_job(jobs, job_file=file_path)
+            elif choice == "5":
                 break
             else:
-                print("Invalid choice; please enter 1-4.")
+                print("Nepareiza izvēle; lūdzu, ievadiet 1-5.")
 
+    main()
