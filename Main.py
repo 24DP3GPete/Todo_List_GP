@@ -7,7 +7,7 @@ if __name__ == "__main__":
         jobs = load_jobs(job_file=file_path)
 
         while True:
-            print("\nMenu:\n1) Uzdevumu saraksts\n2) Pievienot uzdevumu\n3) Noņemt uzdevumu\n4) Rediģēt uzdevumu\n5) Iziet")
+            print("\nMenu:\n1) Uzdevumu saraksts\n2) Pievienot uzdevumu\n3) Rediģēt uzdevumu\n4) Noņemt uzdevumu\n5) Iziet")
             choice = input("Izvēlēties opciju: ").strip()
 
             if choice == "1":
@@ -15,9 +15,9 @@ if __name__ == "__main__":
             elif choice == "2":
                 jobs = add_job(jobs, job_file=file_path)
             elif choice == "3":
-                jobs = remove_job(jobs, job_file=file_path)
-            elif choice == "4":
                 jobs = edit_job(jobs, job_file=file_path)
+            elif choice == "4":
+                jobs = remove_job(jobs, job_file=file_path)
             elif choice == "5":
                 break
             else:
