@@ -34,7 +34,6 @@ def view_details(task):
 
     item = task[idx]
     print("\nDetaļas:")
-    print(f"Numurs: {item['numurs']}")
     print(f"Nosaukums: {item['nosaukums']}")
     print(f"Apraksts: {item['description']}")
     print(f"Prioritāte: {item['priority']}")
@@ -53,7 +52,6 @@ def add_task(task, task_file=None):
     status = input("Ievadiet statusu (gaida/darbojas/pabeigts): ").strip()
 
     new_task = {
-        'numurs': len(task) + 1,
         'nosaukums': nosaukums,
         'description': description,
         'priority': priority,
@@ -88,7 +86,7 @@ def remove_task(task, task_file=None):
 
     removed = task.pop(idx)
     save_tasks(task, task_file=task_file or None)
-    print("Noņemts:", f"{removed['numurs']} - {removed['nosaukums']}")
+    print("Noņemts:", removed['nosaukums'])
     return task
 
 

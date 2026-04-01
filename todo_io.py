@@ -24,7 +24,7 @@ def save_tasks(tasks, task_file=None):
         with open(path, "w", encoding="utf-8", newline='') as f:
             pass
         return
-    fieldnames = ['numurs', 'nosaukums', 'description', 'priority', 'status']
+    fieldnames = ['nosaukums', 'description', 'priority', 'status']
     with open(path, "w", encoding="utf-8", newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()

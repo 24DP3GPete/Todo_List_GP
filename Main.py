@@ -7,7 +7,7 @@ if __name__ == "__main__":
         tasks = load_tasks(task_file=file_path)
 
         while True:
-            print("\nMenu:\n1) Skatīt uzdevumu detaļas\n2) Pievienot uzdevumu\n3) Pievienot uzdevumu\n4) Rediģēt uzdevumu\n5) Noņemt uzdevumu\n6) Iziet")
+            print("\nMenu:\n1) Skatīt uzdevumus\n2) Skatīt uzdevumu detaļas\n3) Pievienot uzdevumu\n4) Rediģēt uzdevumu\n5) Noņemt uzdevumu\n6) Iziet")
             choice = input("Izvēlēties opciju: ").strip()
 
             if choice == "1":
