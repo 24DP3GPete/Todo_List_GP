@@ -20,7 +20,6 @@ def load_tasks(task_file=None):
 def save_tasks(tasks, task_file=None):
     path = _normalize_path(task_file)
     if not tasks:
-        # If no tasks, just create empty file or remove?
         with open(path, "w", encoding="utf-8", newline='') as f:
             pass
         return
