@@ -1,15 +1,55 @@
 from todo_io import load_tasks, save_tasks
 
 
-def show_tasks(task):
+def show_tasks(task, title=None):
     if not task:
         print("Vēl nav darbu. Pievienojiet vienu!")
         return
 
-    print("\nUzdevumu saraksts:")
+    if title:
+        print(f"\n{title}")
+    else:
+        print("\nUzdevumu saraksts:")
     for i, item in enumerate(task, start=1):
         print(f"{i}. {item['nosaukums']}")
     print()
+
+
+def filter_tasks(task):
+    if not task:
+        print("Nav uzdevumu.")
+        return
+
+    fields = {
+        "1": ("nosaukums", "Nosaukums"),
+        "2": ("description", "Apraksts"),
+        "3": ("priority", "Prioritāte"),
+        "4": ("status", "Statuss")
+    }
+
+    print("\nFiltrēt pēc:")
+    for key, (_, label) in fields.items():
+        print(f"{key}) {label}")
+
+    field_choice = input("Izvēlieties lauku: ").strip()
+    if field_choice not in fields:
+        print("Nederīga izvēle.")
+        return
+
+    field_key, field_label = fields[field_choice]
+
+    filter_value = input(f"Ievadiet meklējamo {field_label} tekstu: ").strip()
+    if not filter_value:
+        print("Atcelts.")
+        return
+
+    search_text = filter_value.lower()
+    filtered = [item for item in task if search_text in item.get(field_key, "").lower()]
+    if not filtered:
+        print("Nav uzdevumu, kas atbilst izvēlētajam filtram.")
+        return
+
+    show_tasks(filtered, title=f"Uzdevumi ar {field_label} satur '{filter_value}'")
 
 
 def view_details(task):
