@@ -48,7 +48,7 @@ def filter_tasks(task):
     search_text = filter_value.lower()
     filtered = [item for item in task if search_text in item.get(field_key, "").lower()]
     if not filtered:
-        print("Nav uzdevumu, kas atbilst izvēlētajam filtram.")
+        print("Nav uzdevumu, kas atbilst meklētajam.")
         return
 
     show_tasks(filtered, title=f"Uzdevumi ar {field_label} satur '{filter_value}'")
