@@ -1,4 +1,5 @@
 from todo_io import load_tasks, save_tasks
+import datetime
 
 
 def show_tasks(task, title=None):
@@ -24,7 +25,8 @@ def filter_tasks(task):
         "1": ("nosaukums", "Nosaukums"),
         "2": ("description", "Apraksts"),
         "3": ("priority", "Prioritāte"),
-        "4": ("status", "Statuss")
+        "4": ("status", "Statuss"),
+        "5": ("date_added", "Datums pievienots")
     }
 
     print("\nFiltrēt pēc:")
@@ -78,6 +80,7 @@ def view_details(task):
     print(f"Apraksts: {item['description']}")
     print(f"Prioritāte: {item['priority']}")
     print(f"Statuss: {item['status']}")
+    print(f"Datums pievienots: {item.get('date_added', 'Nezināms')}")
     print()
 
 
@@ -95,7 +98,8 @@ def add_task(task, task_file=None):
         'nosaukums': nosaukums,
         'description': description,
         'priority': priority,
-        'status': status
+        'status': status,
+        'date_added': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
     task.append(new_task)
@@ -162,7 +166,8 @@ def edit_task(task, task_file=None):
         'nosaukums': new_nosaukums,
         'description': new_description,
         'priority': new_priority,
-        'status': new_status
+        'status': new_status,
+        'date_added': current.get('date_added', datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
     }
 
     save_tasks(task, task_file=task_file or None)

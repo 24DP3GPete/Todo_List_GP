@@ -14,7 +14,13 @@ def load_tasks(task_file=None):
         return []
     with open(path, "r", encoding="utf-8", newline='') as f:
         reader = csv.DictReader(f)
-        return list(reader)
+        tasks = []
+        for row in reader:
+            # Ensure date_added exists, set to "Before Time" if missing
+            if 'date_added' not in row:
+                row['date_added'] = "Before Time"
+            tasks.append(row)
+        return tasks
 
 
 def save_tasks(tasks, task_file=None):
@@ -23,7 +29,7 @@ def save_tasks(tasks, task_file=None):
         with open(path, "w", encoding="utf-8", newline='') as f:
             pass
         return
-    fieldnames = ['nosaukums', 'description', 'priority', 'status']
+    fieldnames = ['nosaukums', 'description', 'priority', 'status', 'date_added']
     with open(path, "w", encoding="utf-8", newline='') as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
