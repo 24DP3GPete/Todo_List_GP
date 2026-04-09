@@ -29,7 +29,7 @@ def filter_tasks(task):
         "5": ("date_added", "Datums pievienots")
     }
 
-    print("\nFiltrēt pēc:")
+    print("\nMeklēt pēc:")
     for key, (_, label) in fields.items():
         print(f"{key}) {label}")
 
