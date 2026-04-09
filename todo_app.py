@@ -159,7 +159,21 @@ def edit_task(task, task_file=None):
     new_nosaukums = input(f"Nosaukums ({current['nosaukums']}): ").strip() or current['nosaukums']
     new_description = input(f"Apraksts ({current['description']}): ").strip() or current['description']
     new_priority = input(f"Prioritāte ({current['priority']}): ").strip() or current['priority']
-    new_status = input(f"Statuss ({current['status']}): ").strip() or current['status']
+    
+    status_options = {
+        "1": "nav iesākts",
+        "2": "progresā", 
+        "3": "pabeigts"
+    }
+    print(f"Pašreizējais statuss: {current['status']}")
+    print("Izvēlieties jauno statusu:")
+    for key, status in status_options.items():
+        print(f"{key}) {status}")
+    status_choice = input("Izvēlieties (1-3 vai Enter, lai saglabātu pašreizējo): ").strip()
+    if status_choice in status_options:
+        new_status = status_options[status_choice]
+    else:
+        new_status = current['status']
 
     task[idx] = {
         'nosaukums': new_nosaukums,
