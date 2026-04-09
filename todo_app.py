@@ -91,7 +91,15 @@ def add_task(task, task_file=None):
         return task
 
     description = input("Ievadiet aprakstu: ").strip()
-    priority = input("Ievadiet prioritāti (zems/vidējs/augsts): ").strip()
+    
+    priority_map = {"1": "zems", "2": "vidējs", "3": "augsts"}
+    while True:
+        priority_input = input("Ievadiet prioritāti (1-zems, 2-vidējs, 3-augsts): ").strip()
+        if priority_input in priority_map:
+            priority = priority_map[priority_input]
+            break
+        else:
+            print("Nederīga prioritāte. Lūdzu ievadiet 1, 2 vai 3.")
 
     new_task = {
         'nosaukums': nosaukums,
@@ -158,7 +166,21 @@ def edit_task(task, task_file=None):
 
     new_nosaukums = input(f"Nosaukums ({current['nosaukums']}): ").strip() or current['nosaukums']
     new_description = input(f"Apraksts ({current['description']}): ").strip() or current['description']
-    new_priority = input(f"Prioritāte ({current['priority']}): ").strip() or current['priority']
+    
+    priority_options = {
+        "1": "zems",
+        "2": "vidējs",
+        "3": "augsts"
+    }
+    print(f"Pašreizējā prioritāte: {current['priority']}")
+    print("Izvēlieties jauno prioritāti:")
+    for key, priority in priority_options.items():
+        print(f"{key}) {priority}")
+    priority_choice = input("Izvēlieties (1-3 vai Enter, lai saglabātu pašreizējo): ").strip()
+    if priority_choice in priority_options:
+        new_priority = priority_options[priority_choice]
+    else:
+        new_priority = current['priority']
     
     status_options = {
         "1": "nav iesākts",

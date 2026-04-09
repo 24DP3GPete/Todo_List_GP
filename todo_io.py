@@ -16,7 +16,6 @@ def load_tasks(task_file=None):
         reader = csv.DictReader(f)
         tasks = []
         for row in reader:
-            # Ensure date_added exists, set to "Before Time" if missing
             if 'date_added' not in row:
                 row['date_added'] = "Before Time"
             tasks.append(row)
