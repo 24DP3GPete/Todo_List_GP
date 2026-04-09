@@ -92,13 +92,12 @@ def add_task(task, task_file=None):
 
     description = input("Ievadiet aprakstu: ").strip()
     priority = input("Ievadiet prioritāti (zems/vidējs/augsts): ").strip()
-    status = input("Ievadiet statusu (gaida/darbojas/pabeigts): ").strip()
 
     new_task = {
         'nosaukums': nosaukums,
         'description': description,
         'priority': priority,
-        'status': status,
+        'status': "nav iesākts",
         'date_added': datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     }
 
